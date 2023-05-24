@@ -21,7 +21,7 @@ ARCHITECTURE behavioral OF my_and IS
             o : OUT STD_LOGIC
         );
     END COMPONENT;
-    SIGNAL not_a, not_b, not_o : STD_LOGIC;
+    SIGNAL not_o : STD_LOGIC;
 BEGIN
     nand_gate : my_nand PORT MAP(a, b, not_o);
     not_gate : my_not PORT MAP(not_o, o);
