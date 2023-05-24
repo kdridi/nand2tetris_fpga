@@ -1,14 +1,14 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 
-ENTITY my_inv IS
+ENTITY my_not IS
     PORT (
         i : IN STD_LOGIC;
         o : OUT STD_LOGIC
     );
-END my_inv;
+END my_not;
 
-ARCHITECTURE behavioral OF my_inv IS
+ARCHITECTURE behavioral OF my_not IS
     COMPONENT my_nand
         PORT (
             a, b : IN STD_LOGIC;

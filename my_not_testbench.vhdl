@@ -1,11 +1,11 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 
-ENTITY my_inv_testbench IS
-END my_inv_testbench;
+ENTITY my_not_testbench IS
+END my_not_testbench;
 
-ARCHITECTURE behavioral OF my_inv_testbench IS
-    COMPONENT my_inv
+ARCHITECTURE behavioral OF my_not_testbench IS
+    COMPONENT my_not
         PORT (
             i : IN STD_LOGIC;
             o : OUT STD_LOGIC
@@ -14,7 +14,7 @@ ARCHITECTURE behavioral OF my_inv_testbench IS
 
     SIGNAL i, o : STD_LOGIC;
 BEGIN
-    structure : my_inv PORT MAP(i, o);
+    structure : my_not PORT MAP(i, o);
 
     PROCESS
     BEGIN
