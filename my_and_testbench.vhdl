@@ -14,7 +14,7 @@ ARCHITECTURE behavioral OF my_and_testbench IS
 
     SIGNAL a, b, o : STD_LOGIC;
 BEGIN
-    and_gate : my_and PORT MAP(a, b, o);
+    bench : my_and PORT MAP(a, b, o);
 
     PROCESS
     BEGIN

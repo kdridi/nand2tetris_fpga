@@ -14,7 +14,7 @@ ARCHITECTURE behavioral OF my_nand_testbench IS
 
     SIGNAL a, b, o : STD_LOGIC;
 BEGIN
-    structure : my_nand PORT MAP(a, b, o);
+    bench : my_nand PORT MAP(a, b, o);
 
     PROCESS
     BEGIN

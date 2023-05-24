@@ -14,7 +14,7 @@ ARCHITECTURE behavioral OF my_xor_testbench IS
 
     SIGNAL a, b, o : STD_LOGIC;
 BEGIN
-    and_gate : my_xor PORT MAP(a, b, o);
+    bench : my_xor PORT MAP(a, b, o);
 
     PROCESS
     BEGIN

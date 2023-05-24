@@ -14,7 +14,7 @@ ARCHITECTURE behavioral OF my_not_testbench IS
 
     SIGNAL i, o : STD_LOGIC;
 BEGIN
-    structure : my_not PORT MAP(i, o);
+    bench : my_not PORT MAP(i, o);
 
     PROCESS
     BEGIN
