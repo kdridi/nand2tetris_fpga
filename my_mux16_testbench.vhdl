@@ -17,124 +17,65 @@ ARCHITECTURE behavioral OF my_mux16_testbench IS
     SIGNAL sel : STD_LOGIC;
     SIGNAL o_actual : STD_LOGIC_VECTOR(15 DOWNTO 0);
     SIGNAL o_expected : STD_LOGIC_VECTOR(15 DOWNTO 0);
+
+    TYPE test_case IS RECORD
+        a, b : STD_LOGIC_VECTOR(15 DOWNTO 0);
+        sel : STD_LOGIC;
+        o : STD_LOGIC_VECTOR(15 DOWNTO 0);
+    END RECORD;
+
+    TYPE test_case_array IS ARRAY (NATURAL RANGE <>) OF test_case;
+    CONSTANT test_cases : test_case_array := (
+        -- a, b, sel, o
+        (a => "1111111100011101", b => "0001001001010010", sel => '0', o => "1111111100011101"),
+        (a => "0001111010011010", b => "1100110010010010", sel => '1', o => "1100110010010010"),
+        (a => "1010010100001100", b => "0010101000010101", sel => '0', o => "1010010100001100"),
+        (a => "1100011110110000", b => "1101101101011111", sel => '1', o => "1101101101011111"),
+        (a => "0000000010100000", b => "0101001111011000", sel => '0', o => "0000000010100000"),
+        (a => "0001100001010101", b => "0110010111110000", sel => '1', o => "0110010111110000"),
+        (a => "1110100110000011", b => "0001111011001010", sel => '0', o => "1110100110000011"),
+        (a => "0010010101000010", b => "1101000100001100", sel => '1', o => "1101000100001100"),
+        (a => "0000011000000011", b => "0100111000100011", sel => '0', o => "0000011000000011"),
+        (a => "0101101110110010", b => "0100110111010100", sel => '1', o => "0100110111010100"),
+        (a => "1100010011110000", b => "0101010111111001", sel => '0', o => "1100010011110000"),
+        (a => "1011101101101010", b => "0001010111011010", sel => '1', o => "0001010111011010"),
+        (a => "0100001110001001", b => "1010010010110011", sel => '0', o => "0100001110001001"),
+        (a => "1000110111110110", b => "1000000010001100", sel => '1', o => "1000000010001100"),
+        (a => "0000000110010000", b => "1010111110101110", sel => '0', o => "0000000110010000"),
+        (a => "1110110011010000", b => "0000000010101101", sel => '1', o => "0000000010101101")
+    );
+
+    FUNCTION slv_to_string (slv : STD_LOGIC_VECTOR) RETURN STRING IS
+        VARIABLE str : STRING (slv'length - 1 DOWNTO 1) := (OTHERS => NUL);
+    BEGIN
+        FOR n IN slv'length - 1 DOWNTO 1 LOOP
+            str(n) := STD_LOGIC'image(slv((n - 1)))(2);
+        END LOOP;
+        RETURN str;
+    END FUNCTION;
+
 BEGIN
     bench : my_mux16 PORT MAP(a, b, sel, o_actual);
 
     PROCESS
     BEGIN
 
-        a <= (OTHERS => '0');
-        b <= (OTHERS => '0');
-        sel <= '0';
-        o_expected <= (OTHERS => '0');
-        WAIT FOR 10 ns;
+        FOR n IN test_cases'RANGE LOOP
+            a <= test_cases(n).a;
+            b <= test_cases(n).b;
+            sel <= test_cases(n).sel;
+            o_expected <= test_cases(n).o;
 
-        a <= (OTHERS => '0');
-        b <= (OTHERS => '1');
-        sel <= '0';
-        o_expected <= (OTHERS => '0');
-        WAIT FOR 10 ns;
+            WAIT FOR 10 ns;
 
-        a <= (OTHERS => '1');
-        b <= (OTHERS => '0');
-        sel <= '0';
-        o_expected <= (OTHERS => '1');
-        WAIT FOR 10 ns;
-
-        a <= (OTHERS => '1');
-        b <= (OTHERS => '1');
-        sel <= '0';
-        o_expected <= (OTHERS => '1');
-        WAIT FOR 10 ns;
-
-        a <= (OTHERS => '0');
-        b <= (OTHERS => '0');
-        sel <= '1';
-        o_expected <= (OTHERS => '0');
-        WAIT FOR 10 ns;
-
-        a <= (OTHERS => '0');
-        b <= (OTHERS => '1');
-        sel <= '1';
-        o_expected <= (OTHERS => '1');
-        WAIT FOR 10 ns;
-
-        a <= (OTHERS => '1');
-        b <= (OTHERS => '0');
-        sel <= '1';
-        o_expected <= (OTHERS => '0');
-        WAIT FOR 10 ns;
-
-        -- test avec des motifs de bits plus complexes 01
-        a <= "0100100100100000"; -- 0x4920
-        b <= "0100000000111110"; -- 0x403E
-        sel <= '0';
-        o_expected <= "0100100100100000"; -- 0x4920
-        WAIT FOR 10 ns;
-
-        -- test avec des motifs de bits plus complexes 02
-        a <= "0101101101000100"; -- 0x5B44
-        b <= "0011000100111001"; -- 0x3139
-        sel <= '1';
-        o_expected <= "0011000100111001"; -- 0x3139
-        WAIT FOR 10 ns;
-
-        -- test avec des motifs de bits plus complexes 03
-        a <= "0001010111110111"; -- 0x15F7
-        b <= "1111110101010010"; -- 0xFD52
-        sel <= '0';
-        o_expected <= "0001010111110111"; -- 0x15F7
-        WAIT FOR 10 ns;
-
-        -- test avec des motifs de bits plus complexes 04
-        a <= "1101001001010001"; -- 0xD251
-        b <= "1100100101000101"; -- 0xC945
-        sel <= '1';
-        o_expected <= "1100100101000101"; -- 0xC945
-        WAIT FOR 10 ns;
-
-        -- test avec des motifs de bits plus complexes 05
-        a <= "1001010010101001"; -- 0x94A9
-        b <= "1111010100110010"; -- 0xF532
-        sel <= '0';
-        o_expected <= "1001010010101001"; -- 0x94A9
-        WAIT FOR 10 ns;
-
-        -- test avec des motifs de bits plus complexes 06
-        a <= "1100010010011011"; -- 0xC49B
-        b <= "1000000010010111"; -- 0x8097
-        sel <= '1';
-        o_expected <= "1000000010010111"; -- 0x8097
-        WAIT FOR 10 ns;
-
-        -- test avec des motifs de bits plus complexes 07
-        a <= "1000010110111010"; -- 0x85BA
-        b <= "1000101100001101"; -- 0x8B0D
-        sel <= '0';
-        o_expected <= "1000010110111010"; -- 0x85BA
-        WAIT FOR 10 ns;
-
-        -- test avec des motifs de bits plus complexes 08
-        a <= "0111010110000001"; -- 0x7581
-        b <= "0011100010000001"; -- 0x3881
-        sel <= '1';
-        o_expected <= "0011100010000001"; -- 0x3881
-        WAIT FOR 10 ns;
-
-        -- test avec des motifs de bits plus complexes 09
-        a <= "0010101011110110"; -- 0x2AF6
-        b <= "0011100111101000"; -- 0x39E8
-        sel <= '0';
-        o_expected <= "0010101011110110"; -- 0x2AF6
-        WAIT FOR 10 ns;
-
-        -- test avec des motifs de bits plus complexes 10
-        a <= "1100111100100110"; -- 0xCF26
-        b <= "1110111010101100"; -- 0xEEAC
-        sel <= '1';
-        o_expected <= "1110111010101100"; -- 0xEEAC
-        WAIT FOR 10 ns;
-
+            ASSERT (o_actual = o_expected)
+            REPORT "test failed for " &
+                "a = " & slv_to_string(a) &
+                ", b = " & slv_to_string(b) &
+                ", sel = " & STD_LOGIC'image(sel) &
+                ". expected o = " & slv_to_string(o_expected) &
+                ", got " & slv_to_string(o_actual) SEVERITY error;
+        END LOOP;
         WAIT;
 
     END PROCESS;

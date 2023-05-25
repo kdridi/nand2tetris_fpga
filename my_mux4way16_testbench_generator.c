@@ -15,17 +15,15 @@ int main(void)
         uint16_t b = rand() % 65536;
         uint16_t c = rand() % 65536;
         uint16_t d = rand() % 65536;
-        uint16_t values[4] = {a, b, c, d};
+        uint16_t values[] = {a, b, c, d};
         uint16_t o = values[n & 3];
-        printf("\n");
-        printf("        -- test avec des motifs de bits plus complexes %02u\n", n + 1);
-        printf("        a <= \"%s\"; -- 0x%04X\n", toBinary(a), a);
-        printf("        b <= \"%s\"; -- 0x%04X\n", toBinary(b), b);
-        printf("        c <= \"%s\"; -- 0x%04X\n", toBinary(c), c);
-        printf("        d <= \"%s\"; -- 0x%04X\n", toBinary(d), d);
-        printf("        sel <= \"%s\";\n", toBinary(n & 3) + 14);
-        printf("        o_expected <= \"%s\"; -- 0x%04X\n", toBinary(o), o);
-        printf("        WAIT FOR 10 ns;\n");
+        printf("(a => \"%s\"", toBinary(a));
+        printf(",b => \"%s\"", toBinary(b));
+        printf(",c => \"%s\"", toBinary(c));
+        printf(",d => \"%s\"", toBinary(d));
+        printf(",sel => \"%s\"", toBinary(n & 3) + 14);
+        printf(",o => \"%s\"", toBinary(o));
+        printf(")%s\n", n == TEST_SIZE - 1 ? "" : ",");
     }
 
     return 0;

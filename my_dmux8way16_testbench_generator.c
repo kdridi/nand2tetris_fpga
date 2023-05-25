@@ -20,19 +20,17 @@ int main(void)
         uint16_t f_expected = n % 8 == 5 ? i : 0;
         uint16_t g_expected = n % 8 == 6 ? i : 0;
         uint16_t h_expected = n % 8 == 7 ? i : 0;
-        printf("\n");
-        printf("        -- test avec des motifs de bits plus complexes %02u\n", n + 1);
-        printf("        i <= \"%s\"; -- 0x%04X\n", toBinary(i), i);
-        printf("        sel <= \"%s\";\n", toBinary(n & 7) + 13);
-        printf("        a_expected <= \"%s\"; -- 0x%04X\n", toBinary(a_expected), a_expected);
-        printf("        b_expected <= \"%s\"; -- 0x%04X\n", toBinary(b_expected), b_expected);
-        printf("        c_expected <= \"%s\"; -- 0x%04X\n", toBinary(c_expected), c_expected);
-        printf("        d_expected <= \"%s\"; -- 0x%04X\n", toBinary(d_expected), d_expected);
-        printf("        e_expected <= \"%s\"; -- 0x%04X\n", toBinary(e_expected), e_expected);
-        printf("        f_expected <= \"%s\"; -- 0x%04X\n", toBinary(f_expected), f_expected);
-        printf("        g_expected <= \"%s\"; -- 0x%04X\n", toBinary(g_expected), g_expected);
-        printf("        h_expected <= \"%s\"; -- 0x%04X\n", toBinary(h_expected), h_expected);
-        printf("        WAIT FOR 10 ns;\n");
+        printf("(i => \"%s\"", toBinary(i));
+        printf(",sel => \"%s\"", toBinary(n & 7) + 13);
+        printf(",a => \"%s\"", toBinary(a_expected));
+        printf(",b => \"%s\"", toBinary(b_expected));
+        printf(",c => \"%s\"", toBinary(c_expected));
+        printf(",d => \"%s\"", toBinary(d_expected));
+        printf(",e => \"%s\"", toBinary(e_expected));
+        printf(",f => \"%s\"", toBinary(f_expected));
+        printf(",g => \"%s\"", toBinary(g_expected));
+        printf(",h => \"%s\"", toBinary(h_expected));
+        printf(")%s\n", n == TEST_SIZE - 1 ? "" : ",");
     }
 
     return 0;

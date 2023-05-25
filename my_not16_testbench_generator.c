@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define TEST_SIZE 10
+#define TEST_SIZE 16
 
 static const char *toBinary(uint16_t x);
 
@@ -13,11 +13,9 @@ int main(void)
     for (uint16_t n = 0; n < TEST_SIZE; n++) {
         uint16_t i = rand() % 65536;
         uint16_t o = ~i;
-        printf("\n");
-        printf("        -- test avec des motifs de bits plus complexes %02u\n", n + 1);
-        printf("        i <= \"%s\"; -- 0x%04X\n", toBinary(i), i);
-        printf("        o_expected <= \"%s\"; -- 0x%04X\n", toBinary(o), o);
-        printf("        WAIT FOR 10 ns;\n");
+        printf("(i => \"%s\"", toBinary(i));
+        printf(",o => \"%s\"", toBinary(o));
+        printf(")%s\n", n == TEST_SIZE - 1 ? "" : ",");
     }
 
     return 0;

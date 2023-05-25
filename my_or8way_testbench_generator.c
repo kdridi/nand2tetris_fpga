@@ -11,12 +11,10 @@ int main(void)
 {
     srand(time(NULL));
     for (uint16_t n = 0; n < TEST_SIZE; n++) {
-        uint16_t a = rand() % 65536;
-        uint16_t b = rand() % 65536;
-        uint16_t o = a & b;
-        printf("(a => \"%s\"", toBinary(a));
-        printf(",b => \"%s\"", toBinary(b));
-        printf(",o => \"%s\"", toBinary(o));
+        uint16_t i = rand() % 255;
+        uint16_t o = !!i;
+        printf("(i => \"%s\"", toBinary(i) + 8);
+        printf(",o => '%s'", toBinary(o & 1) + 15);
         printf(")%s\n", n == TEST_SIZE - 1 ? "" : ",");
     }
 

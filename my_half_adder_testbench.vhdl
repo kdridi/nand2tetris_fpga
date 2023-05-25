@@ -18,38 +18,56 @@ ARCHITECTURE behavioral OF my_half_adder_testbench IS
     SIGNAL c_actual : STD_LOGIC;
     SIGNAL o_expected : STD_LOGIC;
     SIGNAL c_expected : STD_LOGIC;
+
+    TYPE test_case IS RECORD
+        a, b : STD_LOGIC;
+        o : STD_LOGIC;
+        c : STD_LOGIC;
+    END RECORD;
+
+    TYPE test_case_array IS ARRAY (NATURAL RANGE <>) OF test_case;
+    CONSTANT test_cases : test_case_array := (
+        -- a, b, o, c
+        (a => '0', b => '0', o => '0', c => '0'),
+        (a => '0', b => '1', o => '1', c => '0'),
+        (a => '1', b => '0', o => '1', c => '0'),
+        (a => '1', b => '1', o => '0', c => '1')
+    );
+
+    FUNCTION slv_to_string (slv : STD_LOGIC_VECTOR) RETURN STRING IS
+        VARIABLE str : STRING (slv'length - 1 DOWNTO 1) := (OTHERS => NUL);
+    BEGIN
+        FOR n IN slv'length - 1 DOWNTO 1 LOOP
+            str(n) := STD_LOGIC'image(slv((n - 1)))(2);
+        END LOOP;
+        RETURN str;
+    END FUNCTION;
+
 BEGIN
     bench : my_half_adder PORT MAP(a, b, o_actual, c_actual);
 
     PROCESS
     BEGIN
 
-        a <= '0';
-        b <= '0';
-        o_expected <= '0';
-        c_expected <= '0';
+    FOR n IN test_cases'RANGE LOOP
+        a <= test_cases(n).a;
+        b <= test_cases(n).b;
+        o_expected <= test_cases(n).o;
+        c_expected <= test_cases(n).c;
+
         WAIT FOR 10 ns;
 
-        a <= '0';
-        b <= '1';
-        o_expected <= '1';
-        c_expected <= '0';
-        WAIT FOR 10 ns;
+        ASSERT (o_actual = o_expected AND c_actual = c_expected)
+        REPORT "test failed for " &
+            "a = " & STD_LOGIC'image(a) &
+            ", b = " & STD_LOGIC'image(b) &
+            ". expected o = " & STD_LOGIC'image(o_expected) &
+            ", got " & STD_LOGIC'image(o_actual) &
+            ". expected c = " & STD_LOGIC'image(c_expected) &
+            ", got " & STD_LOGIC'image(c_actual) SEVERITY error;
+    END LOOP;
+    WAIT;
 
-        a <= '1';
-        b <= '0';
-        o_expected <= '1';
-        c_expected <= '0';
-        WAIT FOR 10 ns;
-
-        a <= '1';
-        b <= '1';
-        o_expected <= '0';
-        c_expected <= '1';
-        WAIT FOR 10 ns;
-
-        WAIT;
-
-    END PROCESS;
+END PROCESS;
 
 END behavioral;
