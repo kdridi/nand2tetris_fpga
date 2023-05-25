@@ -7,56 +7,79 @@ END my_full_adder_testbench;
 ARCHITECTURE behavioral OF my_full_adder_testbench IS
     COMPONENT my_full_adder
         PORT (
-            a, b, ci : IN STD_LOGIC;
-            o, co : OUT STD_LOGIC
+            a, b : IN STD_LOGIC;
+            c_in : IN STD_LOGIC;
+            o : OUT STD_LOGIC;
+            c_out : OUT STD_LOGIC
         );
     END COMPONENT;
 
-    SIGNAL a, b, ci, o, co : STD_LOGIC;
+    SIGNAL a, b : STD_LOGIC;
+    SIGNAL c_in : STD_LOGIC;
+    SIGNAL o_actual : STD_LOGIC;
+    SIGNAL c_out_actual : STD_LOGIC;
+    SIGNAL o_expected : STD_LOGIC;
+    SIGNAL c_out_expected : STD_LOGIC;
 BEGIN
-    bench : my_full_adder PORT MAP(a, b, ci, o, co);
+    bench : my_full_adder PORT MAP(a, b, c_in, o_actual, c_out_actual);
 
     PROCESS
     BEGIN
 
         a <= '0';
         b <= '0';
-        ci <= '0';
+        c_in <= '0';
+        o_expected <= '0';
+        c_out_expected <= '0';
         WAIT FOR 10 ns;
 
         a <= '0';
         b <= '1';
-        ci <= '0';
+        c_in <= '0';
+        o_expected <= '1';
+        c_out_expected <= '0';
         WAIT FOR 10 ns;
 
         a <= '1';
         b <= '0';
-        ci <= '0';
+        c_in <= '0';
+        o_expected <= '1';
+        c_out_expected <= '0';
         WAIT FOR 10 ns;
 
         a <= '1';
         b <= '1';
-        ci <= '0';
+        c_in <= '0';
+        o_expected <= '0';
+        c_out_expected <= '1';
         WAIT FOR 10 ns;
 
         a <= '0';
         b <= '0';
-        ci <= '1';
+        c_in <= '1';
+        o_expected <= '1';
+        c_out_expected <= '0';
         WAIT FOR 10 ns;
 
         a <= '0';
         b <= '1';
-        ci <= '1';
+        c_in <= '1';
+        o_expected <= '0';
+        c_out_expected <= '1';
         WAIT FOR 10 ns;
 
         a <= '1';
         b <= '0';
-        ci <= '1';
+        c_in <= '1';
+        o_expected <= '0';
+        c_out_expected <= '1';
         WAIT FOR 10 ns;
 
         a <= '1';
         b <= '1';
-        ci <= '1';
+        c_in <= '1';
+        o_expected <= '1';
+        c_out_expected <= '1';
         WAIT FOR 10 ns;
 
         WAIT;

@@ -16,7 +16,7 @@ int main(void)
         printf("\n");
         printf("        -- test avec des motifs de bits plus complexes %02u\n", n + 1);
         printf("        i <= \"%s\"; -- 0x%04X\n", toBinary(i), i);
-        printf("        -- o = \"%s\" : 0x%04X\n", toBinary(o), o);
+        printf("        o_expected <= \"%s\"; -- 0x%04X\n", toBinary(o), o);
         printf("        WAIT FOR 10 ns;\n");
     }
 

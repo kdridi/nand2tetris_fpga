@@ -15,9 +15,10 @@ ARCHITECTURE behavioral OF my_mux16_testbench IS
 
     SIGNAL a, b : STD_LOGIC_VECTOR(15 DOWNTO 0);
     SIGNAL sel : STD_LOGIC;
-    SIGNAL o : STD_LOGIC_VECTOR(15 DOWNTO 0);
+    SIGNAL o_actual : STD_LOGIC_VECTOR(15 DOWNTO 0);
+    SIGNAL o_expected : STD_LOGIC_VECTOR(15 DOWNTO 0);
 BEGIN
-    bench : my_mux16 PORT MAP(a, b, sel, o);
+    bench : my_mux16 PORT MAP(a, b, sel, o_actual);
 
     PROCESS
     BEGIN
@@ -25,106 +26,113 @@ BEGIN
         a <= (OTHERS => '0');
         b <= (OTHERS => '0');
         sel <= '0';
+        o_expected <= (OTHERS => '0');
         WAIT FOR 10 ns;
 
         a <= (OTHERS => '0');
         b <= (OTHERS => '1');
         sel <= '0';
+        o_expected <= (OTHERS => '0');
         WAIT FOR 10 ns;
 
         a <= (OTHERS => '1');
         b <= (OTHERS => '0');
         sel <= '0';
+        o_expected <= (OTHERS => '1');
         WAIT FOR 10 ns;
 
         a <= (OTHERS => '1');
         b <= (OTHERS => '1');
         sel <= '0';
+        o_expected <= (OTHERS => '1');
         WAIT FOR 10 ns;
 
         a <= (OTHERS => '0');
         b <= (OTHERS => '0');
         sel <= '1';
+        o_expected <= (OTHERS => '0');
         WAIT FOR 10 ns;
 
         a <= (OTHERS => '0');
         b <= (OTHERS => '1');
         sel <= '1';
+        o_expected <= (OTHERS => '1');
         WAIT FOR 10 ns;
 
         a <= (OTHERS => '1');
         b <= (OTHERS => '0');
         sel <= '1';
+        o_expected <= (OTHERS => '0');
         WAIT FOR 10 ns;
 
         -- test avec des motifs de bits plus complexes 01
-        a <= "0010001100000011"; -- 0x2303
-        b <= "1010110110111100"; -- 0xADBC
+        a <= "0100100100100000"; -- 0x4920
+        b <= "0100000000111110"; -- 0x403E
         sel <= '0';
-        -- o = "0010001100000011" : 0x2303
+        o_expected <= "0100100100100000"; -- 0x4920
         WAIT FOR 10 ns;
 
         -- test avec des motifs de bits plus complexes 02
-        a <= "0100010000000101"; -- 0x4405
-        b <= "1100110011111010"; -- 0xCCFA
+        a <= "0101101101000100"; -- 0x5B44
+        b <= "0011000100111001"; -- 0x3139
         sel <= '1';
-        -- o = "1100110011111010" : 0xCCFA
+        o_expected <= "0011000100111001"; -- 0x3139
         WAIT FOR 10 ns;
 
         -- test avec des motifs de bits plus complexes 03
-        a <= "1101011000001100"; -- 0xD60C
-        b <= "0000011111100001"; -- 0x07E1
+        a <= "0001010111110111"; -- 0x15F7
+        b <= "1111110101010010"; -- 0xFD52
         sel <= '0';
-        -- o = "1101011000001100" : 0xD60C
+        o_expected <= "0001010111110111"; -- 0x15F7
         WAIT FOR 10 ns;
 
         -- test avec des motifs de bits plus complexes 04
-        a <= "0100000110011010"; -- 0x419A
-        b <= "1111111010001110"; -- 0xFE8E
+        a <= "1101001001010001"; -- 0xD251
+        b <= "1100100101000101"; -- 0xC945
         sel <= '1';
-        -- o = "1111111010001110" : 0xFE8E
+        o_expected <= "1100100101000101"; -- 0xC945
         WAIT FOR 10 ns;
 
         -- test avec des motifs de bits plus complexes 05
-        a <= "0010011101100010"; -- 0x2762
-        b <= "0101011001000100"; -- 0x5644
+        a <= "1001010010101001"; -- 0x94A9
+        b <= "1111010100110010"; -- 0xF532
         sel <= '0';
-        -- o = "0010011101100010" : 0x2762
+        o_expected <= "1001010010101001"; -- 0x94A9
         WAIT FOR 10 ns;
 
         -- test avec des motifs de bits plus complexes 06
-        a <= "0100100100101100"; -- 0x492C
-        b <= "1000110000101111"; -- 0x8C2F
+        a <= "1100010010011011"; -- 0xC49B
+        b <= "1000000010010111"; -- 0x8097
         sel <= '1';
-        -- o = "1000110000101111" : 0x8C2F
+        o_expected <= "1000000010010111"; -- 0x8097
         WAIT FOR 10 ns;
 
         -- test avec des motifs de bits plus complexes 07
-        a <= "0001111111011000"; -- 0x1FD8
-        b <= "0000100110111000"; -- 0x09B8
+        a <= "1000010110111010"; -- 0x85BA
+        b <= "1000101100001101"; -- 0x8B0D
         sel <= '0';
-        -- o = "0001111111011000" : 0x1FD8
+        o_expected <= "1000010110111010"; -- 0x85BA
         WAIT FOR 10 ns;
 
         -- test avec des motifs de bits plus complexes 08
-        a <= "0100111001011011"; -- 0x4E5B
-        b <= "1001010011011011"; -- 0x94DB
+        a <= "0111010110000001"; -- 0x7581
+        b <= "0011100010000001"; -- 0x3881
         sel <= '1';
-        -- o = "1001010011011011" : 0x94DB
+        o_expected <= "0011100010000001"; -- 0x3881
         WAIT FOR 10 ns;
 
         -- test avec des motifs de bits plus complexes 09
-        a <= "0111100101110100"; -- 0x7974
-        b <= "0101101101110111"; -- 0x5B77
+        a <= "0010101011110110"; -- 0x2AF6
+        b <= "0011100111101000"; -- 0x39E8
         sel <= '0';
-        -- o = "0111100101110100" : 0x7974
+        o_expected <= "0010101011110110"; -- 0x2AF6
         WAIT FOR 10 ns;
 
         -- test avec des motifs de bits plus complexes 10
-        a <= "0000011011011100"; -- 0x06DC
-        b <= "1001100000110000"; -- 0x9830
+        a <= "1100111100100110"; -- 0xCF26
+        b <= "1110111010101100"; -- 0xEEAC
         sel <= '1';
-        -- o = "1001100000110000" : 0x9830
+        o_expected <= "1110111010101100"; -- 0xEEAC
         WAIT FOR 10 ns;
 
         WAIT;

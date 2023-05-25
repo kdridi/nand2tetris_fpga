@@ -24,7 +24,7 @@ int main(void)
         printf("        c <= \"%s\"; -- 0x%04X\n", toBinary(c), c);
         printf("        d <= \"%s\"; -- 0x%04X\n", toBinary(d), d);
         printf("        sel <= \"%s\";\n", toBinary(n & 3) + 14);
-        printf("        expected <= \"%s\"; -- 0x%04X\n", toBinary(o), o);
+        printf("        o_expected <= \"%s\"; -- 0x%04X\n", toBinary(o), o);
         printf("        WAIT FOR 10 ns;\n");
     }
 

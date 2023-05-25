@@ -3,7 +3,8 @@ USE ieee.std_logic_1164.ALL;
 
 ENTITY my_mux IS
     PORT (
-        a, b, sel : IN STD_LOGIC;
+        a, b : IN STD_LOGIC;
+        sel : IN STD_LOGIC;
         o : OUT STD_LOGIC
     );
 END my_mux;

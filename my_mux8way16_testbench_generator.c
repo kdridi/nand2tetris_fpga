@@ -32,7 +32,7 @@ int main(void)
         printf("        g <= \"%s\"; -- 0x%04X\n", toBinary(g), g);
         printf("        h <= \"%s\"; -- 0x%04X\n", toBinary(h), h);
         printf("        sel <= \"%s\";\n", toBinary(n & 7) + 13);
-        printf("        expected <= \"%s\"; -- 0x%04X\n", toBinary(o), o);
+        printf("        o_expected <= \"%s\"; -- 0x%04X\n", toBinary(o), o);
         printf("        WAIT FOR 10 ns;\n");
     }
 

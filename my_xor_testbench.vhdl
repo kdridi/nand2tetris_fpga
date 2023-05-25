@@ -12,27 +12,33 @@ ARCHITECTURE behavioral OF my_xor_testbench IS
         );
     END COMPONENT;
 
-    SIGNAL a, b, o : STD_LOGIC;
+    SIGNAL a, b : STD_LOGIC;
+    SIGNAL o_actual : STD_LOGIC;
+    SIGNAL o_expected : STD_LOGIC;
 BEGIN
-    bench : my_xor PORT MAP(a, b, o);
+    bench : my_xor PORT MAP(a, b, o_actual);
 
     PROCESS
     BEGIN
 
         a <= '0';
         b <= '0';
+        o_expected <= '0';
         WAIT FOR 10 ns;
 
         a <= '0';
         b <= '1';
+        o_expected <= '1';
         WAIT FOR 10 ns;
 
         a <= '1';
         b <= '0';
+        o_expected <= '1';
         WAIT FOR 10 ns;
 
         a <= '1';
         b <= '1';
+        o_expected <= '0';
         WAIT FOR 10 ns;
 
         WAIT;

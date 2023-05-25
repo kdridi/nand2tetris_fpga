@@ -12,17 +12,21 @@ ARCHITECTURE behavioral OF my_not_testbench IS
         );
     END COMPONENT;
 
-    SIGNAL i, o : STD_LOGIC;
+    SIGNAL i : STD_LOGIC;
+    SIGNAL o_actual : STD_LOGIC;
+    SIGNAL o_exptected : STD_LOGIC;
 BEGIN
-    bench : my_not PORT MAP(i, o);
+    bench : my_not PORT MAP(i, o_actual);
 
     PROCESS
     BEGIN
 
         i <= '0';
+        o_exptected <= '1';
         WAIT FOR 10 ns;
 
         i <= '1';
+        o_exptected <= '0';
         WAIT FOR 10 ns;
 
         WAIT;

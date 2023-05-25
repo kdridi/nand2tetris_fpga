@@ -3,7 +3,8 @@ USE ieee.std_logic_1164.ALL;
 
 ENTITY my_dmux IS
     PORT (
-        i, sel : IN STD_LOGIC;
+        i : IN STD_LOGIC;
+        sel : IN STD_LOGIC;
         a, b : OUT STD_LOGIC
     );
 END my_dmux;
