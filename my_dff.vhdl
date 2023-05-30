@@ -3,7 +3,8 @@ USE ieee.std_logic_1164.ALL;
 
 ENTITY my_dff IS
     PORT (
-        i, clk : IN STD_LOGIC;
+        clk : IN STD_LOGIC;
+        i : IN STD_LOGIC;
         o : OUT STD_LOGIC
     );
 END my_dff;
