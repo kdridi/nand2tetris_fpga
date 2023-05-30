@@ -1,11 +1,11 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 
-ENTITY my_bit16_testbench IS
-END my_bit16_testbench;
+ENTITY my_register_testbench IS
+END my_register_testbench;
 
-ARCHITECTURE behavioral OF my_bit16_testbench IS
-    COMPONENT my_bit16
+ARCHITECTURE behavioral OF my_register_testbench IS
+    COMPONENT my_register
         PORT (
             clk : IN STD_LOGIC;
             load : IN STD_LOGIC;
@@ -61,7 +61,7 @@ ARCHITECTURE behavioral OF my_bit16_testbench IS
     END FUNCTION;
 
 BEGIN
-    bench : my_bit16 PORT MAP(clk, load, i, o_actual);
+    bench : my_register PORT MAP(clk, load, i, o_actual);
 
     PROCESS
     BEGIN

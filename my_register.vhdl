@@ -1,16 +1,16 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 
-ENTITY my_bit16 IS
+ENTITY my_register IS
     PORT (
         clk : IN STD_LOGIC;
         load : IN STD_LOGIC;
         i : IN STD_LOGIC_VECTOR (15 DOWNTO 0);
         o : OUT STD_LOGIC_VECTOR (15 DOWNTO 0)
     );
-END my_bit16;
+END my_register;
 
-ARCHITECTURE my_bit16_architecture OF my_bit16 IS
+ARCHITECTURE my_register_architecture OF my_register IS
     COMPONENT my_bit IS
         PORT (
             clk : IN STD_LOGIC;
@@ -38,4 +38,4 @@ BEGIN
     bit_14 : my_bit PORT MAP (clk, load, i(14), o(14));
     bit_15 : my_bit PORT MAP (clk, load, i(15), o(15));
 
-END my_bit16_architecture;
+END my_register_architecture;
