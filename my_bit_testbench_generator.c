@@ -15,8 +15,8 @@ int main(void)
         char i = rand() % 2 ? '1' : '0';
         char load = rand() % 2 ? '1' : '0';
         o = load == '1' ? i : o;
-        printf("(i => '%c'", i);
-        printf(",load => '%c'", load);
+        printf("(load => '%c'", load);
+        printf(",i => '%c'", i);
         printf(",o => '%c'", o);
         printf(")%s\n", n == TEST_SIZE - 1 ? "" : ",");
     }

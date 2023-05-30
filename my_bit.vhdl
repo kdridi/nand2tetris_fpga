@@ -4,7 +4,8 @@ USE ieee.std_logic_1164.ALL;
 ENTITY my_bit IS
     PORT (
         clk : IN STD_LOGIC;
-        i, load : IN STD_LOGIC;
+        load : IN STD_LOGIC;
+        i : IN STD_LOGIC;
         o : OUT STD_LOGIC
     );
 END my_bit;

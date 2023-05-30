@@ -8,62 +8,65 @@ ARCHITECTURE behavioral OF my_bit_testbench IS
     COMPONENT my_bit
         PORT (
             clk : IN STD_LOGIC;
-            i, load : IN STD_LOGIC;
+            load : IN STD_LOGIC;
+            i : IN STD_LOGIC;
             o : OUT STD_LOGIC
         );
     END COMPONENT;
 
     SIGNAL clk : STD_LOGIC;
-    SIGNAL i, load : STD_LOGIC;
+    SIGNAL load : STD_LOGIC;
+    SIGNAL i : STD_LOGIC;
     SIGNAL o_actual : STD_LOGIC;
     SIGNAL o_expected : STD_LOGIC;
 
     CONSTANT clk_period : TIME := 10 ns;
 
     TYPE test_case IS RECORD
-        i, load : STD_LOGIC;
+        load : STD_LOGIC;
+        i : STD_LOGIC;
         o : STD_LOGIC;
     END RECORD;
 
     TYPE test_case_array IS ARRAY (NATURAL RANGE <>) OF test_case;
     CONSTANT test_cases : test_case_array := (
         -- i, load o
-        (i => '1', load => '0', o => 'U'),
-        (i => '1', load => '1', o => '1'),
-        (i => '0', load => '0', o => '1'),
-        (i => '1', load => '1', o => '1'),
-        (i => '1', load => '1', o => '1'),
-        (i => '1', load => '1', o => '1'),
-        (i => '0', load => '1', o => '0'),
-        (i => '1', load => '0', o => '0'),
-        (i => '1', load => '1', o => '1'),
-        (i => '0', load => '0', o => '1'),
-        (i => '1', load => '1', o => '1'),
-        (i => '0', load => '1', o => '0'),
-        (i => '1', load => '0', o => '0'),
-        (i => '1', load => '0', o => '0'),
-        (i => '1', load => '0', o => '0'),
-        (i => '1', load => '1', o => '1'),
-        (i => '0', load => '1', o => '0'),
-        (i => '0', load => '1', o => '0'),
-        (i => '1', load => '1', o => '1'),
-        (i => '0', load => '0', o => '1'),
-        (i => '0', load => '1', o => '0'),
-        (i => '1', load => '0', o => '0'),
-        (i => '0', load => '1', o => '0'),
-        (i => '1', load => '0', o => '0'),
-        (i => '0', load => '1', o => '0'),
-        (i => '0', load => '0', o => '0'),
-        (i => '1', load => '0', o => '0'),
-        (i => '1', load => '0', o => '0'),
-        (i => '1', load => '0', o => '0'),
-        (i => '0', load => '0', o => '0'),
-        (i => '0', load => '1', o => '0'),
-        (i => '1', load => '1', o => '1')
+        (load => '0', i => '0', o => 'U'),
+        (load => '1', i => '0', o => '0'),
+        (load => '1', i => '1', o => '1'),
+        (load => '1', i => '1', o => '1'),
+        (load => '1', i => '0', o => '0'),
+        (load => '0', i => '0', o => '0'),
+        (load => '0', i => '1', o => '0'),
+        (load => '0', i => '1', o => '0'),
+        (load => '1', i => '0', o => '0'),
+        (load => '1', i => '0', o => '0'),
+        (load => '0', i => '1', o => '0'),
+        (load => '0', i => '1', o => '0'),
+        (load => '1', i => '1', o => '1'),
+        (load => '0', i => '0', o => '1'),
+        (load => '0', i => '0', o => '1'),
+        (load => '0', i => '1', o => '1'),
+        (load => '1', i => '1', o => '1'),
+        (load => '0', i => '1', o => '1'),
+        (load => '0', i => '0', o => '1'),
+        (load => '1', i => '1', o => '1'),
+        (load => '1', i => '1', o => '1'),
+        (load => '1', i => '1', o => '1'),
+        (load => '0', i => '0', o => '1'),
+        (load => '0', i => '1', o => '1'),
+        (load => '0', i => '1', o => '1'),
+        (load => '0', i => '1', o => '1'),
+        (load => '1', i => '0', o => '0'),
+        (load => '1', i => '0', o => '0'),
+        (load => '1', i => '0', o => '0'),
+        (load => '0', i => '1', o => '0'),
+        (load => '0', i => '1', o => '0'),
+        (load => '0', i => '1', o => '0')
     );
     CONSTANT total_cycles : INTEGER := test_cases'LENGTH;
 BEGIN
-    bench : my_bit PORT MAP(clk, i, load, o_actual);
+    bench : my_bit PORT MAP(clk, load, i, o_actual);
 
     PROCESS
     BEGIN
@@ -89,7 +92,7 @@ BEGIN
             WAIT FOR 3 * clk_period / 4;
 
             o_expected <= test_cases(n).o;
-            
+
             ASSERT (o_actual = o_expected)
             REPORT "test failed for " &
                 "i = " & STD_LOGIC'image(i) &
