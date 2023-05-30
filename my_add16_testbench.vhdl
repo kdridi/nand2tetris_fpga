@@ -27,6 +27,7 @@ ARCHITECTURE behavioral OF my_add16_testbench IS
 
     TYPE test_case_array IS ARRAY (NATURAL RANGE <>) OF test_case;
     CONSTANT test_cases : test_case_array := (
+        -- a, b, o, c
         (a => "1011010001110000", b => "0101000101000100", o => "0000010110110100", c => '1'),
         (a => "0000111100010111", b => "1111100011001011", o => "0000011111100010", c => '1'),
         (a => "0001101111011000", b => "0111110111011111", o => "1001100110110111", c => '0'),
