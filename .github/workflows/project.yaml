@@ -1,0 +1,16 @@
+name: Project
+
+on: [push, pull_request]
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - name: Install GHDL dependencies
+        run: sudo apt-get install -y ghdl ghdl-common ghdl-gcc ghdl-llvm ghdl-mcode
+      - name: Build with Tests
+        run: make all
